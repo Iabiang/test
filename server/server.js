@@ -1,17 +1,27 @@
+const { json, urlencoded } = require("express");
 const express = require("express");
 // const ejs = require("ejs");
 const app = express();
-const port = 4000;
+const port = 8025;
+const db = require("./config/database");
+const individualsRoute = require("./routes/individualsRoutes");
+const companyRoutes = require("./routes/companyRoutes");
 
 app.use(express.static("public"));
+// app.use(json())
 
 app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: true }));
+app.use(json(), urlencoded({ extended: true }));
 
-app.get("/client/*", (req, res) => {
-  res.render("client");
-});
+app.use("/api/v1/individuals", individualsRoute);
+app.use("/api/v1/companies", companyRoutes);
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+//database
+db.connect()
+  .then(() => {
+    console.log("Database connected");
+    app.listen(port, () => {
+      console.log(`App listening on port ${port}`);
+    });
+  })
+  .catch((err) => console.log("Error: " + err));
