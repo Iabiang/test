@@ -3,7 +3,7 @@ const IndividualService = require("../services/queryService");
 
 /** return list of individuals */
 exports.listIndividuals = (req, res) => {
-  IndividualService.findAll({ tableName: Table.individuals })
+  IndividualService.findAll({ tableName: Table.individual })
     .then((results) => res.status(200).send(results.rows))
     .catch((err) => res.send(err.message));
 };
@@ -12,11 +12,11 @@ exports.listIndividuals = (req, res) => {
 exports.individualsDetails = (req, res) => {
   const { individual_id } = req.params;
   IndividualService.findByValue({
-    tableName: Table.individuals,
+    tableName: Table.individual,
     columnName: "individualid",
     value: individual_id,
   })
-    .then((results) => res.send(results.rows))
+    .then((results) => res.status(200).send(results.rows))
     .catch((err) =>
       setImmediate(() => {
         throw err;
@@ -29,7 +29,7 @@ exports.createIndividual = (req, res) => {
   const keys = Object.keys(req.body);
   const values = Object.values(req.body);
   IndividualService.create({ tableName: "individual", keys, values })
-    .then((results) => res.send("ID created"))
+    .then((results) => res.status(201).send("ID created"))
     .catch((err) =>
       setImmediate(() => {
         throw err;
@@ -43,13 +43,15 @@ exports.updateIndividual = (req, res) => {
   const keys = Object.keys(req.body);
   const values = Object.values(req.body);
   IndividualService.update({
-    tableName: Table.individuals,
+    tableName: Table.individual,
     keys,
     values,
     columnNames: ["individualid"],
     id: [individual_id],
   })
-    .then((results) => res.send(`Individual details with id ${id} updated `))
+    .then((results) =>
+      res.status(201).send(`Individual details with id ${id} updated `)
+    )
     .catch((err) =>
       setImmediate(() => {
         throw err;
@@ -66,7 +68,9 @@ exports.deleteIndividual = (req, res) => {
     values: [individual_id],
   })
     .then((results) =>
-      res.send(`Individual details with id ${individual_id} Removed `)
+      res
+        .status(201)
+        .send(`Individual details with id ${individual_id} Removed `)
     )
     .catch((err) =>
       setImmediate(() => {
@@ -78,7 +82,7 @@ exports.deleteIndividual = (req, res) => {
 //count list of individuals
 exports.countListIndividuals = (req, res) => {
   IndividualService.countRows({ tableName: Table.individuals })
-    .then((results) => res.send(results.rows))
+    .then((results) => res.status(200).send(results.rows))
     .catch((err) =>
       setImmediate(() => {
         throw err;
@@ -99,7 +103,7 @@ exports.listIndividualTask = (req, res) => {
     columnName: "individualid",
     id: individual_id,
   })
-    .then((results) => res.send(results.rows))
+    .then((results) => res.status(200).send(results.rows))
     .catch((err) =>
       setImmediate(() => {
         throw err;
@@ -115,7 +119,7 @@ exports.countIndividualTask = (req, res) => {
     columnName: "individualid",
     key: individual_id,
   })
-    .then((results) => res.send(results.rows))
+    .then((results) => res.status(200).send(results.rows))
     .catch((err) =>
       setImmediate(() => {
         throw err;
@@ -135,7 +139,7 @@ exports.individualTask = (req, res) => {
     columnNames: ["taskid", "individualid"],
     values: [task_id, individual_id],
   })
-    .then((results) => res.send(results.rows))
+    .then((results) => res.status(200).send(results.rows))
     .catch((err) =>
       setImmediate(() => {
         throw err;
@@ -154,7 +158,9 @@ exports.updateIndividualTask = (req, res) => {
     columnNames: ["taskid", "individualid"],
     id: [task_id, individual_id],
   })
-    .then((results) => res.send(`Task details with id ${task_id} updated `))
+    .then((results) =>
+      res.status(201).send(`Task details with id ${task_id} updated `)
+    )
     .catch((err) =>
       setImmediate(() => {
         throw err;
@@ -169,7 +175,7 @@ exports.deleteIndividualTask = (req, res) => {
     columnNames: ["taskid", "individualid"],
     values: [task_id, individual_id],
   })
-    .then((results) => res.send(`Task with id ${task_id} delete`))
+    .then((results) => res.status(200).send(`Task with id ${task_id} delete`))
     .catch((err) =>
       setImmediate(() => {
         throw err;
@@ -184,7 +190,7 @@ exports.listIndividualTeams = (req, res) => {
     columnName: "individualid",
     value: individual_id,
   })
-    .then((results) => res.send(results.rows))
+    .then((results) => res.status(200).send(results.rows))
     .catch((err) =>
       setImmediate(() => {
         throw err;
@@ -199,7 +205,7 @@ exports.countIndividualTeams = (req, res) => {
     columnName: "individualid",
     key: individual_id,
   })
-    .then((results) => res.send(results.rows))
+    .then((results) => res.status(200).send(results.rows))
     .catch((err) =>
       setImmediate(() => {
         throw err;
@@ -214,7 +220,7 @@ exports.getIndividualTeam = (req, res) => {
     columnNames: ["teamid", "individualid"],
     values: [team_id, individual_id],
   })
-    .then((results) => res.send(results.rows))
+    .then((results) => res.status(200).send(results.rows))
     .catch((err) =>
       setImmediate(() => {
         throw err;
@@ -233,7 +239,9 @@ exports.updateIndividualTeam = (req, res) => {
     columnNames: ["teamid", "individualid"],
     id: [team_id, individual_id],
   })
-    .then((results) => res.send(`Task details with id ${team_id} updated `))
+    .then((results) =>
+      res.status(201).send(`Task details with id ${team_id} updated `)
+    )
     .catch((err) =>
       setImmediate(() => {
         throw err;
@@ -248,7 +256,7 @@ exports.deleteIndividualTeam = (req, res) => {
     columnNames: ["teamid", "individualid"],
     values: [team_id, individual_id],
   })
-    .then((results) => res.send(`Task with id ${team_id} delete`))
+    .then((results) => res.status(200).send(`Task with id ${team_id} delete`))
     .catch((err) =>
       setImmediate(() => {
         throw err;

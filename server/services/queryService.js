@@ -4,13 +4,12 @@ exports.findAll = async ({ tableName }) =>
   db.query(`SELECT * FROM ${tableName}`);
 
 exports.countRows = async ({ tableName, columnName = null, key = null }) => {
-  if (key) {
-    return await db.query(
-      `select count(*) FROM ${tableName} where ${columnName} = $1`,
-      [key]
-    );
+  if (key !== null) {
+    const sql = `select count(*) FROM ${tableName} where ${columnName} = $1`;
+    return await db.query(sql, [key]);
   } else {
-    return await db.query(`select count(*) FROM ${tableName}`);
+    const sql = `select count(*) FROM ${tableName}`;
+    return await db.query(sql);
   }
 };
 
@@ -41,8 +40,8 @@ exports.update = async ({
     .join(" and ");
 
   const sql = `update ${tableName}  SET ${placeholder} where ${conditions}`;
-
   const concatValue = values.concat(id); // ['values', 'id']
+
   return await db.query(sql, concatValue);
 };
 
@@ -65,10 +64,28 @@ exports.findByValue = async ({
   return await db.query(sql, [value]);
 };
 
-exports.findByValues = async ({ tableName, columnNames = [], values = [] }) => {
+exports.findByValues = async ({
+  tableName,
+  columnNames = [],
+  values = [],
+  operator = "and",
+}) => {
   const placeholder = columnNames
     .map((item, i) => `${item} = \$${i + 1}`) // placeholder = individualid = 1a and
-    .join(" and ");
+    .join(` ${operator} `);
   const sql = `SELECT * FROM ${tableName} WHERE ${placeholder}`;
+  return await db.query(sql, values);
+};
+
+exports.findByStrings = async ({
+  tableName = null,
+  columnNames = [],
+  values = [],
+  operator = null,
+}) => {
+  const placeholder = columnNames
+    .map((item, i) => `lower(${item}) like lower($${i + 1})`)
+    .join(` ${operator} `);
+  const sql = `SELECT * FROM ${tableName} where ${placeholder} `;
   return await db.query(sql, values);
 };

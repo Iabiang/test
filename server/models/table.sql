@@ -1,8 +1,8 @@
 create table company(
     companyId SERIAL PRIMARY KEY,
     companyName VARCHAR(60),
-    companyDescription VARCHAR(200),
-    companyPhoneno BIGINT,
+    companyDescription TEXT,
+    companyPhoneno VARCHAR(20),
     companyEmailid VARCHAR(50),
     status VARCHAR(50),
     createdBy VARCHAR(60),
@@ -13,14 +13,14 @@ create table individual(
     individualid SERIAL PRIMARY KEY,
     firstName VARCHAR(20),
     middleName VARCHAR(20),
-    lastname VARCHAR(20),
+    lastName VARCHAR(20),
     gender VARCHAR(10),
     dob DATE,
-    emailid VARCHAR(50),
-    phoneno BIGINT,
+    emailId VARCHAR(50),
+    phoneNo VARCHAR(20),
     address TEXT,
-    tokenid BIGINT REFERENCES token(tokenid) ,
-    companyid BIGINT REFERENCES company(companyid),
+    tokenId BIGINT REFERENCES token(tokenid) ,
+    companyId BIGINT REFERENCES company(companyid),
     createdBy VARCHAR(50),
     createdDate DATE
 )
@@ -45,7 +45,7 @@ create table task(
     actionDate	VARCHAR(150),
     projectId	BIGINT,
     subProjectId	BIGINT,
-    individualsid BIGINT REFERENCES individuals(individualsid)
+    individualId BIGINT REFERENCES individuals(individualsid)
 )
 
 create table team(
@@ -58,8 +58,8 @@ create table team(
 )
 
 create table token(
-    tokenid SERIAL PRIMARY KEY,
-    tokenname VARCHAR(60),
-    tokendescription TEXT,
-    hardwareid BIGINT
+    tokenId SERIAL PRIMARY KEY,
+    tokenName VARCHAR(60),
+    tokenDescription TEXT,
+    hardwareId BIGINT
 )

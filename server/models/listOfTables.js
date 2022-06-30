@@ -1,5 +1,11 @@
 exports.Table = {
-  individuals: "individual",
+  /**
+   * individual
+   */
+  individual: "individual",
+  /**
+   * task
+   */
   task: "task",
   team: "team",
   company: "company",
