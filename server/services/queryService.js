@@ -45,10 +45,15 @@ exports.update = async ({
   return await db.query(sql, concatValue);
 };
 
-exports.delete = async ({ tableName, columnNames = [], values = [] }) => {
+exports.delete = async ({
+  tableName,
+  columnNames = [],
+  values = [],
+  operator = "and",
+}) => {
   const conditions = columnNames
     .map((item, i) => `${item} = \$${i + 1}`)
-    .join(" and ");
+    .join(` ${operator} `);
 
   const sql = `DELETE FROM ${tableName} where ${conditions}`;
   //   console.log(sql, conditions);

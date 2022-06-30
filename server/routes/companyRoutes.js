@@ -30,4 +30,32 @@ router
   .get(companyController.getCompanyIndividualsDetails)
   .put(companyController.updateCompanyIndividualsDetails)
   .delete(companyController.deleteCompanyIndividual);
+
+router
+  .route("/:company_id/project_managers")
+  .get(companyController.getCompanyProjectManagers);
+
+router
+  .route("/:company_id/project_managers/count")
+  .get(companyController.countCompanyProjectMangers);
+
+router
+  .route("/:company_id/project_managers/:project_manager_id")
+  .get(companyController.getCompanyProjectManagerDetails)
+  .put(companyController.updateCompanyProjectManagerDetails)
+  .delete(companyController.deleteCompanyProjectManager);
+
+router
+  .route("/:company_id/supervisors")
+  .get(companyController.getCompanySupervisors);
+
+router
+  .route("/:company_id/supervisors/count")
+  .get(companyController.countCompanySupervisor);
+
+router
+  .route("/:company_id/supervisors/:supervisor_id")
+  .get(companyController.getCompanySupervisorDetails)
+  .put(companyController.updateCompanySupervisorDetails)
+  .delete(companyController.deleteCompanySupervisor);
 module.exports = router;

@@ -63,3 +63,31 @@ create table token(
     tokenDescription TEXT,
     hardwareId BIGINT
 )
+
+create table projectManager(
+    projectManagerId SERIAL PRIMARY KEY,
+    firstName VARCHAR(30),
+    middleName VARCHAR(30),
+    lastName VARCHAR(30),
+    gender VARCHAR(10),
+    dob DATE,
+    companyId BIGINT REFERENCES company(companyid),
+    tokenid BIGINT REFERENCES token(tokenid),
+    phoneNo VARCHAR(20),
+    emailId VARCHAR(30),
+    address TEXT
+)
+
+create table superVisor(
+    superVisorId SERIAL PRIMARY KEY,
+    firstName VARCHAR(30),
+    middleName VARCHAR(30),
+    lastName VARCHAR(30),
+    gender VARCHAR(10),
+    dob DATE,
+    companyId BIGINT REFERENCES company(companyid),
+    tokenid BIGINT REFERENCES token(tokenid),
+    phoneNo VARCHAR(20),
+    emailId VARCHAR(30),
+    address TEXT
+)

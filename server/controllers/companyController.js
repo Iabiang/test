@@ -193,3 +193,188 @@ exports.deleteCompanyIndividual = (req, res) => {
       })
     );
 };
+
+exports.getCompanyProjectManagers = (req, res) => {
+  const { company_id } = req.params;
+  CompanyService.findById({
+    tableName: Table.projectManager,
+    columnName: "companyid",
+    id: company_id,
+  })
+    .then((results) => res.status(200).send(results.rows))
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
+};
+
+exports.countCompanyProjectMangers = (req, res) => {
+  const { company_id } = req.params;
+  CompanyService.countRows({
+    tableName: Table.projectManager,
+    columnName: "companyid",
+    key: company_id,
+  })
+    .then((results) => res.status(200).send(results.rows))
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
+};
+
+exports.getCompanyProjectManagerDetails = (req, res) => {
+  const { company_id, project_manager_id } = req.params;
+  CompanyService.findByValues({
+    tableName: Table.projectManager,
+    columnNames: ["companyid", "projectmanagerid"],
+    values: [company_id, project_manager_id],
+  })
+    .then((results) => res.status(200).send(results.rows))
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
+};
+
+exports.updateCompanyProjectManagerDetails = (req, res) => {
+  const { company_id, project_manager_id } = req.params;
+  const keys = Object.keys(req.body);
+  const values = Object.values(req.body);
+  CompanyService.update({
+    tableName: Table.projectManager,
+    keys: keys,
+    values: values,
+    columnNames: ["companyid", "projectmanagerid"],
+    id: [company_id, project_manager_id],
+  })
+    .then(() =>
+      res
+        .status(200)
+        .send(
+          `Project Manager with company id ${company_id} and project Manager id ${project_manager_id} updated`
+        )
+    )
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
+};
+
+exports.deleteCompanyProjectManager = (req, res) => {
+  const { company_id, project_manager_id } = req.params;
+  CompanyService.delete({
+    tableName: Table.projectManager,
+    columnNames: ["companyid", "projectmanagerid"],
+    values: [company_id, project_manager_id],
+    operator: "and",
+  })
+    .then(() =>
+      res
+        .status(200)
+        .send(
+          `Project Manager with company id ${company_id} and project Manager id ${project_manager_id} Deleted`
+        )
+    )
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
+};
+
+exports.getCompanySupervisors = (req, res) => {
+  const { company_id } = req.params;
+  CompanyService.findById({
+    tableName: Table.supervisor,
+    columnName: "companyid",
+    id: company_id,
+  })
+    .then((results) => res.status(200).send(results.rows))
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
+};
+
+exports.countCompanySupervisor = (req, res) => {
+  const { company_id } = req.params;
+  CompanyService.countRows({
+    tableName: Table.supervisor,
+    columnName: "companyid",
+    key: company_id,
+  })
+    .then((results) => res.status(200).send(results.rows))
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
+};
+
+exports.getCompanySupervisorDetails = (req, res) => {
+  const { company_id, supervisor_id } = req.params;
+  CompanyService.findByValues({
+    tableName: Table.supervisor,
+    columnNames: ["companyid", "supervisorid"],
+    values: [company_id, supervisor_id],
+    operator: "and",
+  })
+    .then((results) => res.status(200).send(results.rows))
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
+};
+
+exports.updateCompanySupervisorDetails = (req, res) => {
+  const { company_id, supervisor_id } = req.params;
+  const keys = Object.keys(req.body);
+  const values = Object.values(req.body);
+  CompanyService.update({
+    tableName: Table.supervisor,
+    keys: keys,
+    values: values,
+    columnNames: ["companyid", "supervisorid"],
+    id: [company_id, supervisor_id],
+  })
+    .then(() =>
+      res
+        .status(200)
+        .send(
+          `Supervisor with company id ${company_id} and supervisor id ${supervisor_id} updated`
+        )
+    )
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
+};
+
+exports.deleteCompanySupervisor = (req, res) => {
+  const { company_id, supervisor_id } = req.params;
+  CompanyService.delete({
+    tableName: Table.supervisor,
+    columnNames: ["companyid", "supervisorid"],
+    values: [company_id, supervisor_id],
+    operator: "and",
+  })
+    .then(() =>
+      res
+        .status(200)
+        .send(
+          `supervisor with company id ${company_id} and supervisor id ${supervisor_id} Deleted`
+        )
+    )
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
+};
