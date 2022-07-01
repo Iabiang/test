@@ -91,3 +91,20 @@ create table superVisor(
     emailId VARCHAR(30),
     address TEXT
 )
+
+create table project(
+    projectId SERIAL PRIMARY KEY,
+    projectName VARCHAR(30),
+    projectManagerId BIGINT REFERENCES projectManager(projectManagerid),
+    companyid BIGINT REFERENCES company(companyid)
+)
+
+create table subProject(
+    subProjectId SERIAL PRIMARY KEY,
+    subProjectName VARCHAR(50),
+    subProjectDetails TEXT,
+    superVisorId BIGINT REFERENCES superVisor(superVisorId),
+    companyId BIGINT REFERENCES company(companyId),
+    projectId BIGINT REFERENCES project(projectId),
+    projectManagerID BIGINT REFERENCES projectmanager(projectManagerid)
+)

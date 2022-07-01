@@ -6,6 +6,7 @@ const port = 8025;
 const db = require("./config/database");
 const individualsRoute = require("./routes/individualsRoutes");
 const companyRoutes = require("./routes/companyRoutes");
+const projectMangerRoutes = require("./routes/projectManagerRoutes");
 
 app.use(express.static("public"));
 // app.use(json())
@@ -15,6 +16,7 @@ app.use(json(), urlencoded({ extended: true }));
 
 app.use("/api/v1/individuals", individualsRoute);
 app.use("/api/v1/companies", companyRoutes);
+app.use("/api/v1/project_managers", projectMangerRoutes);
 
 //database
 db.connect()
