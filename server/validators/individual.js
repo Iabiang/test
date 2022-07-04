@@ -12,7 +12,7 @@ const {
 } = require("./constraints");
 
 const validateIndividualSchema = async (data) => {
-  let individualSchema = yup.object().shape({
+  const individualSchema = yup.object().shape({
     firstName: yup.string().min(FIRSTNAME_MIN).max(FIRSTNAME_MAX).required(),
     middleName: yup.string().min(MIDDLENAME_MIN).max(MIDDLENAME_MAX),
     lastName: yup.string().min(LASTNAME_MIN).max(LASTNAME_MAX).required(),
