@@ -108,3 +108,24 @@ create table subProject(
     projectId BIGINT REFERENCES project(projectId),
     projectManagerID BIGINT REFERENCES projectmanager(projectManagerid)
 )
+
+create table task(
+    taskid SERIAL PRIMARY KEY,
+    taskName VARCHAR(50),
+    taskDescription TEXT,
+    assignedTo VARCHAR(50),
+    assignedBy VARCHAR(50),
+    buildingId BIGINT,
+    floorId BIGINT,
+    zoneid BIGINT,
+    taskPriority VARCHAR(50),
+    taskSeverity VARCHAR(50),
+    startDate DATE,
+    endDate DATE,
+    taskStatus VARCHAR(50),
+    actionTaken VARCHAR(50),
+    actionComment VARCHAR(50),
+    actionDate DATE,
+    projectId BIGINT REFERENCES project(projectId),
+    subProjectId BIGINT REFERENCES subProject(subProjectId)
+)

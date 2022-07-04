@@ -50,7 +50,9 @@ exports.updateIndividual = (req, res) => {
     id: [individual_id],
   })
     .then((results) =>
-      res.status(201).send(`Individual details with id ${id} updated `)
+      res
+        .status(201)
+        .send(`Individual details with id ${individual_id} updated `)
     )
     .catch((err) =>
       setImmediate(() => {
@@ -101,7 +103,7 @@ exports.listIndividualTask = (req, res) => {
   IndividualService.findByValue({
     tableName: "task",
     columnName: "individualid",
-    id: individual_id,
+    value: individual_id,
   })
     .then((results) => res.status(200).send(results.rows))
     .catch((err) =>
@@ -127,11 +129,6 @@ exports.countIndividualTask = (req, res) => {
     );
 };
 
-/**
- * gets a particular task
- * @param {{}} req
- * @param {{}} res
- */
 exports.individualTask = (req, res) => {
   const { individual_id, task_id } = req.params;
   IndividualService.findByValues({
