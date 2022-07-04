@@ -11,6 +11,7 @@ const projectRoutes = require("./routes/projectRoutes");
 const subProjectRoutes = require("./routes/subProjectRoutes");
 const supervisorRoutes = require("./routes/supervisorRoutes");
 const taskRoutes = require("./routes/taskRoutes");
+const teamRoutes = require("./routes/teamRoutes");
 
 app.use(express.static("public"));
 // app.use(json())
@@ -25,6 +26,7 @@ app.use("/api/v1/projects", projectRoutes);
 app.use("/api/v1/subprojects", subProjectRoutes);
 app.use("/api/v1/supervisors", supervisorRoutes);
 app.use("/api/v1/tasks", taskRoutes);
+app.use("/api/v1/teams", teamRoutes);
 
 //database
 db.connect()

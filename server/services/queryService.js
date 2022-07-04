@@ -89,5 +89,6 @@ exports.findByStrings = async ({
     .map((item, i) => `lower(${item}) like lower($${i + 1})`)
     .join(` ${operator} `);
   const sql = `SELECT * FROM ${tableName} where ${placeholder} `;
+
   return await db.query(sql, values);
 };
