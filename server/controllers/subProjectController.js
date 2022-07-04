@@ -108,3 +108,19 @@ exports.countSubProjectTasks = (req, res) => {
       })
     );
 };
+
+exports.getSubProjectTaskDetails = (req, res) => {
+  const { sub_project_id, task_id } = req.params;
+  SubProjectService.findByValues({
+    tableName: Table.task,
+    columnNames: ["subprojectid", "projectid"],
+    values: [sub_project_id, task_id],
+    operator: "and",
+  })
+    .then((results) => res.status(200).send(results.rows))
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
+};

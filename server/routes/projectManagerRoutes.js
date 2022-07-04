@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const projectMangerController = require("../controllers/projectMangerController");
+const projectMangerController = require("../controllers/projectManagerController");
 
 router
   .route("/")
-  .get(projectMangerController.listProjectMangers)
-  .post(projectMangerController.addProjectManger);
+  .get(projectMangerController.listProjectManagers)
+  .post(projectMangerController.addProjectManager);
 
 router.route("/count").get(projectMangerController.countProjectMangers);
 
@@ -21,7 +21,7 @@ router
 
 router
   .route("/:project_manager_id/projects/count")
-  .get(projectMangerController.countProjectMangerProjects);
+  .get(projectMangerController.countProjectManagerProjects);
 
 router
   .route("/:project_manager_id/projects/:project_id")

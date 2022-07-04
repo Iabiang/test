@@ -24,5 +24,5 @@ router
 
 router
   .route("/:sub_project_id/tasks/:task_id")
-  .get(subProjectController.getSub);
+  .get(subProjectController.getSubProjectTaskDetails);
 module.exports = router;

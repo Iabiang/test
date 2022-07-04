@@ -1,8 +1,8 @@
 const { Table } = require("../models/listOfTables");
-const ProjectMangerService = require("../services/queryService");
+const ProjectManagerService = require("../services/queryService");
 
-exports.listProjectMangers = (req, res) => {
-  ProjectMangerService.findAll({
+exports.listProjectManagers = (req, res) => {
+  ProjectManagerService.findAll({
     tableName: Table.projectManager,
   })
     .then((results) => res.status(200).send(results.rows))
@@ -13,10 +13,10 @@ exports.listProjectMangers = (req, res) => {
     );
 };
 
-exports.addProjectManger = (req, res) => {
+exports.addProjectManager = (req, res) => {
   const keys = Object.keys(req.body);
   const values = Object.values(req.body);
-  ProjectMangerService.create({
+  ProjectManagerService.create({
     tableName: Table.projectManager,
     keys: keys,
     values: values,
@@ -30,7 +30,7 @@ exports.addProjectManger = (req, res) => {
 };
 
 exports.countProjectMangers = (req, res) => {
-  ProjectMangerService.countRows({
+  ProjectManagerService.countRows({
     tableName: Table.projectManager,
   })
     .then((results) => res.status(200).send(results.rows))
@@ -43,7 +43,7 @@ exports.countProjectMangers = (req, res) => {
 
 exports.getProjectManagerDetails = (req, res) => {
   const { project_manager_id } = req.params;
-  ProjectMangerService.findById({
+  ProjectManagerService.findById({
     tableName: Table.projectManager,
     columnName: "projectmanagerid",
     id: project_manager_id,
@@ -60,7 +60,7 @@ exports.updateProjectManagerDetails = (req, res) => {
   const { project_manager_id } = req.params;
   const keys = Object.keys(req.body);
   const values = Object.values(req.body);
-  ProjectMangerService.update({
+  ProjectManagerService.update({
     tableName: Table.projectManager,
     keys: keys,
     values: values,
@@ -81,7 +81,7 @@ exports.updateProjectManagerDetails = (req, res) => {
 
 exports.deleteProjectManager = (req, res) => {
   const { project_manager_id } = req.params;
-  ProjectMangerService.delete({
+  ProjectManagerService.delete({
     tableName: Table.projectManager,
     columnNames: ["projectmanagerid"],
     values: [project_manager_id],
@@ -100,7 +100,7 @@ exports.deleteProjectManager = (req, res) => {
 
 exports.getProjectManagerProjects = (req, res) => {
   const { project_manager_id } = req.params;
-  ProjectMangerService.findById({
+  ProjectManagerService.findById({
     tableName: Table.project,
     columnName: "projectid",
     id: project_manager_id,
@@ -113,9 +113,9 @@ exports.getProjectManagerProjects = (req, res) => {
     );
 };
 
-exports.countProjectMangerProjects = (req, res) => {
+exports.countProjectManagerProjects = (req, res) => {
   const { project_manager_id } = req.params;
-  ProjectMangerService.countRows({
+  ProjectManagerService.countRows({
     tableName: Table.project,
     columnName: "projectmanagerid",
     key: project_manager_id,
@@ -130,7 +130,7 @@ exports.countProjectMangerProjects = (req, res) => {
 
 exports.getProjectManagerProject = (req, res) => {
   const { project_manager_id, project_id } = req.params;
-  ProjectMangerService.findByValues({
+  ProjectManagerService.findByValues({
     tableName: Table.project,
     columnNames: ["projectmanagerid", "projectid"],
     values: [project_manager_id, project_id],
@@ -148,7 +148,7 @@ exports.updateProjectManagerProject = (req, res) => {
   const { project_manager_id, project_id } = req.params;
   const keys = Object.keys(req.body);
   const values = Object.values(req.body);
-  ProjectMangerService.update({
+  ProjectManagerService.update({
     tableName: Table.project,
     keys: keys,
     values: values,
@@ -167,7 +167,7 @@ exports.updateProjectManagerProject = (req, res) => {
 
 exports.deleteProjectManagerProject = (req, res) => {
   const { project_manager_id, project_id } = req.params;
-  ProjectMangerService.delete({
+  ProjectManagerService.delete({
     tableName: Table.project,
     columnNames: ["projectmanagerid", "projectid"],
     values: [project_manager_id, project_id],
@@ -183,7 +183,7 @@ exports.deleteProjectManagerProject = (req, res) => {
 
 exports.getProjectManagerSubProjects = (req, res) => {
   const { project_manager_id } = req.params;
-  ProjectMangerService.findById({
+  ProjectManagerService.findById({
     tableName: Table.subproject,
     columnName: "projectmanagerid",
     id: project_manager_id,
@@ -198,7 +198,7 @@ exports.getProjectManagerSubProjects = (req, res) => {
 
 exports.countProjectManagerSubprojects = (req, res) => {
   const { project_manager_id } = req.params;
-  ProjectMangerService.countRows({
+  ProjectManagerService.countRows({
     tableName: Table.subproject,
     columnName: "projectmanagerid",
     key: project_manager_id,
@@ -213,7 +213,7 @@ exports.countProjectManagerSubprojects = (req, res) => {
 
 exports.getProjectManagerSubProjectDetails = (req, res) => {
   const { project_manager_id, sub_project_id } = req.params;
-  ProjectMangerService.findByValues({
+  ProjectManagerService.findByValues({
     tableName: Table.subproject,
     columnNames: ["projectmanagerid", "subprojectid"],
     values: [project_manager_id, sub_project_id],
@@ -231,7 +231,7 @@ exports.updateProjectManagerSubProjectDetails = (req, res) => {
   const { project_manager_id, sub_project_id } = req.params;
   const keys = Object.keys(req.body);
   const values = Object.values(req.body);
-  ProjectMangerService.update({
+  ProjectManagerService.update({
     tableName: Table.subproject,
     keys: keys,
     values: values,
@@ -250,7 +250,7 @@ exports.updateProjectManagerSubProjectDetails = (req, res) => {
 
 exports.deleteProjectManagerSubproject = (req, res) => {
   const { project_manager_id, sub_project_id } = req.params;
-  ProjectMangerService.delete({
+  ProjectManagerService.delete({
     tableName: Table.subproject,
     columnNames: ["projectmanagerid", "subprojectid"],
     values: [project_manager_id, sub_project_id],
