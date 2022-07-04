@@ -1,4 +1,5 @@
 const { Table } = require("../models/listOfTables");
+const { validateIndividualSchema } = require("../validators/individual");
 const IndividualService = require("../services/queryService");
 
 /** return list of individuals */
@@ -25,16 +26,24 @@ exports.individualsDetails = (req, res) => {
 };
 
 /** create an individual*/
-exports.createIndividual = (req, res) => {
+exports.createIndividual = async (req, res) => {
   const keys = Object.keys(req.body);
   const values = Object.values(req.body);
-  IndividualService.create({ tableName: "individual", keys, values })
-    .then((results) => res.status(201).send("ID created"))
-    .catch((err) =>
-      setImmediate(() => {
-        throw err;
-      })
-    );
+
+  try {
+    const results = await validateIndividualSchema(req.body);
+    const keys = Object.keys(results);
+    const values = Object.values(results);
+    IndividualService.create({ tableName: "individual", keys, values })
+      .then((results) => res.status(201).send("Individual created"))
+      .catch((err) =>
+        setImmediate(() => {
+          throw err;
+        })
+      );
+  } catch (error) {
+    return res.status(400).send(error.errors);
+  }
 };
 
 /** update an individual details */
