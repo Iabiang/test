@@ -10,7 +10,7 @@ create table company(
 )
 
 create table individual(
-    individualid SERIAL PRIMARY KEY,
+    individualId SERIAL PRIMARY KEY,
     firstName VARCHAR(20),
     middleName VARCHAR(20),
     lastName VARCHAR(20),
@@ -19,14 +19,14 @@ create table individual(
     emailId VARCHAR(50),
     phoneNo VARCHAR(20),
     address TEXT,
-    tokenId BIGINT REFERENCES token(tokenid) ,
-    companyId BIGINT REFERENCES company(companyid),
+    tokenId BIGINT REFERENCES token(tokenId) ,
+    companyId BIGINT REFERENCES company(companyId),
     createdBy VARCHAR(50),
     createdDate DATE
 )
 
 
-create table task(
+CREATE TABLE task(
     taskId	SERIAL PRIMARY KEY,
     taskName VARCHAR(150),
     taskDescription	VARCHAR(150),
@@ -45,7 +45,7 @@ create table task(
     actionDate	VARCHAR(150),
     projectId	BIGINT,
     subProjectId	BIGINT,
-    individualId BIGINT REFERENCES individuals(individualsid)
+    individualId BIGINT REFERENCES individuals(individualId)
 )
 
 create table team(
@@ -60,8 +60,7 @@ create table team(
 create table token(
     tokenId SERIAL PRIMARY KEY,
     tokenName VARCHAR(60),
-    tokenDescription TEXT,
-    hardwareId BIGINT
+    tokenDescription TEXT
 )
 
 create table projectManager(
@@ -71,22 +70,22 @@ create table projectManager(
     lastName VARCHAR(30),
     gender VARCHAR(10),
     dob DATE,
-    companyId BIGINT REFERENCES company(companyid),
-    tokenid BIGINT REFERENCES token(tokenid),
+    companyId BIGINT REFERENCES company(companyId),
+    tokenId BIGINT REFERENCES token(tokenId),
     phoneNo VARCHAR(20),
     emailId VARCHAR(30),
     address TEXT
 )
 
-create table superVisor(
-    superVisorId SERIAL PRIMARY KEY,
+create table supervisor(
+    supervisorId SERIAL PRIMARY KEY,
     firstName VARCHAR(30),
     middleName VARCHAR(30),
     lastName VARCHAR(30),
     gender VARCHAR(10),
     dob DATE,
-    companyId BIGINT REFERENCES company(companyid),
-    tokenid BIGINT REFERENCES token(tokenid),
+    companyId BIGINT REFERENCES company(companyId),
+    tokenId BIGINT REFERENCES token(tokenId),
     phoneNo VARCHAR(20),
     emailId VARCHAR(30),
     address TEXT
