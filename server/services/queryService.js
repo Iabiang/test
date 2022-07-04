@@ -3,7 +3,7 @@ const db = require("../config/database");
 exports.findAll = async ({ tableName }) =>
   db.query(`SELECT * FROM ${tableName}`);
 
-exports.countRows = async ({ tableName, columnName = null, key = null }) => {
+exports.countRows = async ({ tableName, columnName = "", key = null }) => {
   if (key !== null) {
     const sql = `select count(*) FROM ${tableName} where ${columnName} = $1`;
     return await db.query(sql, [key]);
@@ -13,14 +13,14 @@ exports.countRows = async ({ tableName, columnName = null, key = null }) => {
   }
 };
 
-exports.findById = async ({ tableName, columnName = null, id }) => {
+exports.findById = async ({ tableName, columnName = "", id }) => {
   const sql = `SELECT * FROM ${tableName} WHERE ${columnName} = $1`;
   return await db.query(sql, [id]);
 };
 
 exports.create = async ({ tableName, keys, values }) => {
   const placeholder = keys.map((_, i) => `\$${i + 1}`).join(",");
-  const sql = `INSERT INTO ${tableName} (${keys})  VALUES(${placeholder}) RETURNING ${tableName}id`;
+  const sql = `INSERT INTO ${tableName} (${keys})  VALUES(${placeholder})`;
   return await db.query(sql, values);
 };
 
@@ -30,6 +30,7 @@ exports.update = async ({
   values,
   columnNames = [],
   id = [],
+  operator = "and",
 }) => {
   const placeholder = keys.map((item, i) => `${item}  =  \$${i + 1}`); //map placeholder = firstname = $1'
 
@@ -37,7 +38,7 @@ exports.update = async ({
 
   const conditions = columnNames
     .map((item, i) => `${item} = \$${i + placeholderNumber}`) //constrainsts individualid = $1 and
-    .join(" and ");
+    .join(` ${operator} `);
 
   const sql = `update ${tableName}  SET ${placeholder} where ${conditions}`;
   const concatValue = values.concat(id); // ['values', 'id']
@@ -60,11 +61,7 @@ exports.delete = async ({
   return await db.query(sql, values);
 };
 
-exports.findByValue = async ({
-  tableName,
-  columnName = null,
-  value = null,
-}) => {
+exports.findByValue = async ({ tableName, columnName = "", value = "" }) => {
   const sql = `SELECT * FROM ${tableName} where ${columnName} = $1`;
   return await db.query(sql, [value]);
 };

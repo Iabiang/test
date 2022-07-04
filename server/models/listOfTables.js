@@ -11,4 +11,6 @@ exports.Table = {
   company: "company",
   projectManager: "projectmanager",
   supervisor: "supervisor",
+  project: "project",
+  subproject: "subproject",
 };
