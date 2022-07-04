@@ -80,10 +80,10 @@ exports.findByValues = async ({
 };
 
 exports.findByStrings = async ({
-  tableName = null,
+  tableName = "",
   columnNames = [],
   values = [],
-  operator = null,
+  operator = "",
 }) => {
   const placeholder = columnNames
     .map((item, i) => `lower(${item}) like lower($${i + 1})`)

@@ -7,6 +7,8 @@ const db = require("./config/database");
 const individualsRoute = require("./routes/individualsRoutes");
 const companyRoutes = require("./routes/companyRoutes");
 const projectMangerRoutes = require("./routes/projectManagerRoutes");
+const projectRoutes = require("./routes/projectRoutes");
+const subProjectRoutes = require("./routes/subProjectRoutes");
 
 app.use(express.static("public"));
 // app.use(json())
@@ -17,6 +19,8 @@ app.use(json(), urlencoded({ extended: true }));
 app.use("/api/v1/individuals", individualsRoute);
 app.use("/api/v1/companies", companyRoutes);
 app.use("/api/v1/project_managers", projectMangerRoutes);
+app.use("/api/v1/projects", projectRoutes);
+app.use("/api/v1/subprojects", subProjectRoutes);
 
 //database
 db.connect()
