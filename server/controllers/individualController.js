@@ -27,14 +27,15 @@ exports.individualsDetails = (req, res) => {
 
 /** create an individual*/
 exports.createIndividual = async (req, res) => {
-  const keys = Object.keys(req.body);
-  const values = Object.values(req.body);
-
   try {
     const results = await validateIndividualSchema(req.body);
     const keys = Object.keys(results);
     const values = Object.values(results);
-    IndividualService.create({ tableName: "individual", keys, values })
+    IndividualService.create({
+      tableName: "individual",
+      keys: keys,
+      values: values,
+    })
       .then((results) => res.status(201).send("Individual created"))
       .catch((err) =>
         setImmediate(() => {

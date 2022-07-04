@@ -1,4 +1,5 @@
 const CompanyService = require("../services/queryService");
+const { validateCompanySchema } = require("../validators/company");
 const { Table } = require("../models/listOfTables");
 
 exports.listCompanies = (req, res) => {
@@ -9,20 +10,25 @@ exports.listCompanies = (req, res) => {
     .catch((e) => console.log(e));
 };
 
-exports.addCompany = (req, res) => {
-  const keys = Object.keys(req.body);
-  const values = Object.values(req.body);
-  CompanyService.create({
-    tableName: Table.company,
-    keys: keys,
-    values: values,
-  })
-    .then(() => res.status(201).send("Company Created"))
-    .catch((err) =>
-      setImmediate(() => {
-        throw err;
-      })
-    );
+exports.addCompany = async (req, res) => {
+  try {
+    const results = await validateCompanySchema(req.body);
+    const keys = Object.keys(results);
+    const values = Object.values(results);
+    CompanyService.create({
+      tableName: Table.company,
+      keys: keys,
+      values: values,
+    })
+      .then(() => res.status(201).send("Company Created"))
+      .catch((err) =>
+        setImmediate(() => {
+          throw err;
+        })
+      );
+  } catch (error) {
+    return res.status(400).send(error.errors);
+  }
 };
 
 exports.getCompanyStatus = (req, res) => {

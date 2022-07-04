@@ -2,8 +2,8 @@ create table company(
     companyId SERIAL PRIMARY KEY,
     companyName VARCHAR(60),
     companyDescription TEXT,
-    companyPhoneno VARCHAR(20),
-    companyEmailid VARCHAR(50),
+    companyPhoneNo VARCHAR(20),
+    companyEmailId VARCHAR(50),
     status VARCHAR(50),
     createdBy VARCHAR(60),
     createdDate DATE

@@ -6,6 +6,8 @@ const LASTNAME_MIN = 2;
 const LASTNAME_MAX = 20;
 const PHONENO_MIN = 10;
 const PHONENO_MAX = 10;
+const COMPANYNAME_MIN = 2;
+const COMPANYNAME_MAX = 60;
 
 module.exports = {
   FIRSTNAME_MIN,
@@ -16,4 +18,6 @@ module.exports = {
   LASTNAME_MAX,
   PHONENO_MIN,
   PHONENO_MAX,
+  COMPANYNAME_MIN,
+  COMPANYNAME_MAX,
 };
