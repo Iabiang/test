@@ -9,6 +9,8 @@ const companyRoutes = require("./routes/companyRoutes");
 const projectMangerRoutes = require("./routes/projectManagerRoutes");
 const projectRoutes = require("./routes/projectRoutes");
 const subProjectRoutes = require("./routes/subProjectRoutes");
+const supervisorRoutes = require("./routes/supervisorRoutes");
+const taskRoutes = require("./routes/taskRoutes");
 
 app.use(express.static("public"));
 // app.use(json())
@@ -21,6 +23,8 @@ app.use("/api/v1/companies", companyRoutes);
 app.use("/api/v1/project_managers", projectMangerRoutes);
 app.use("/api/v1/projects", projectRoutes);
 app.use("/api/v1/subprojects", subProjectRoutes);
+app.use("/api/v1/supervisors", supervisorRoutes);
+app.use("/api/v1/tasks", taskRoutes);
 
 //database
 db.connect()
