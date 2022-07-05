@@ -53,8 +53,8 @@ create table team(
 	teamName VARCHAR(60),
 	teamdescription TEXT,
 	activitystatus VARCHAR(60),
-	supervisorid BIGINT,
-	projectmanagerid BIGINT
+	supervisorId BIGINT REFERENCES supervisor(supervisorId),
+	projectManagerId BIGINT REFERENCES projectManager(projectManagerId)
 )
 
 create table token(

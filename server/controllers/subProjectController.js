@@ -119,11 +119,46 @@ exports.getSubProjectTaskDetails = (req, res) => {
   const { sub_project_id, task_id } = req.params;
   SubProjectService.findByValues({
     tableName: Table.task,
-    columnNames: ["subprojectid", "projectid"],
+    columnNames: ["subprojectid", "taskid"],
     values: [sub_project_id, task_id],
     operator: "and",
   })
     .then((results) => res.status(200).send(results.rows))
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
+};
+
+exports.updateSubProjectTask = (req, res) => {
+  const { sub_project_id, task_id } = req.params;
+  const keys = Object.keys(req.body);
+  const values = Object.values(req.body);
+  SubProjectService.update({
+    tableName: Table.task,
+    keys: keys,
+    values: values,
+    columnNames: ["subprojectid", "projectid"],
+    id: [sub_project_id, task_id],
+  })
+    .then(() => res.status(200).send(`Task with id ${task_id} updated`))
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
+};
+
+exports.deleteSubProjectTask = (req, res) => {
+  const { sub_project_id, task_id } = req.params;
+  SubProjectService.delete({
+    tableName: Table.task,
+    columnNames: ["subprojectid", "taskid"],
+    values: [sub_project_id, task_id],
+    operator: "and",
+  })
+    .then(() => res.status(200).send(`Task with id ${task_id} deleted`))
     .catch((err) =>
       setImmediate(() => {
         throw err;
