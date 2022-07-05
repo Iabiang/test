@@ -1,6 +1,7 @@
 const { serialize } = require("pg-protocol");
 const { Table } = require("../models/listOfTables");
 const SubProjectService = require("../services/queryService");
+const { validateSubProjectSchema } = require("../validators/subProject");
 const { countListIndividuals } = require("./individualController");
 
 exports.getSubProjectsList = (req, res) => {
@@ -15,20 +16,25 @@ exports.getSubProjectsList = (req, res) => {
     );
 };
 
-exports.addSubproject = (req, res) => {
-  const keys = Object.keys(req.body);
-  const values = Object.values(req.body);
-  SubProjectService.create({
-    tableName: Table.subproject,
-    keys: keys,
-    values: values,
-  })
-    .then(() => res.status(201).send("Sub Project Created"))
-    .catch((err) =>
-      setImmediate(() => {
-        throw err;
-      })
-    );
+exports.addSubproject = async (req, res) => {
+  try {
+    const results = await validateSubProjectSchema(req.body);
+    const keys = Object.keys(results);
+    const values = Object.values(results);
+    SubProjectService.create({
+      tableName: Table.subproject,
+      keys: keys,
+      values: values,
+    })
+      .then(() => res.status(201).send("Sub Project Created"))
+      .catch((err) =>
+        setImmediate(() => {
+          throw err;
+        })
+      );
+  } catch (error) {
+    return res.status(400).send(error.errors);
+  }
 };
 
 exports.countSubProjects = (req, res) => {

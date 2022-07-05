@@ -1,4 +1,7 @@
 const { Table } = require("../models/listOfTables");
+const {
+  validateProjectManagerSchema,
+} = require("../validators/projectManager");
 const ProjectManagerService = require("../services/queryService");
 
 exports.listProjectManagers = (req, res) => {
@@ -13,20 +16,27 @@ exports.listProjectManagers = (req, res) => {
     );
 };
 
-exports.addProjectManager = (req, res) => {
+exports.addProjectManager = async (req, res) => {
+  try {
+    const results = await validateProjectManagerSchema(req.body);
+    const keys = Object.keys(results);
+    const values = Object.values(results);
+    ProjectManagerService.create({
+      tableName: Table.projectManager,
+      keys: keys,
+      values: values,
+    })
+      .then(() => res.status(201).send("Project Manager Created"))
+      .catch((err) =>
+        setImmediate(() => {
+          throw err;
+        })
+      );
+  } catch (error) {
+    return res.status(400).send(error.errors);
+  }
   const keys = Object.keys(req.body);
   const values = Object.values(req.body);
-  ProjectManagerService.create({
-    tableName: Table.projectManager,
-    keys: keys,
-    values: values,
-  })
-    .then(() => res.status(201).send("Project Manager Created"))
-    .catch((err) =>
-      setImmediate(() => {
-        throw err;
-      })
-    );
 };
 
 exports.countProjectMangers = (req, res) => {

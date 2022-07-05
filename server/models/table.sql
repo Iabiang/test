@@ -70,11 +70,11 @@ create table projectManager(
     lastName VARCHAR(30),
     gender VARCHAR(10),
     dob DATE,
-    companyId BIGINT REFERENCES company(companyId),
-    tokenId BIGINT REFERENCES token(tokenId),
-    phoneNo VARCHAR(20),
     emailId VARCHAR(30),
-    address TEXT
+    phoneNo VARCHAR(20),
+    address TEXT,
+    tokenId BIGINT REFERENCES token(tokenId),
+    companyId BIGINT REFERENCES company(companyId)   
 )
 
 create table supervisor(
@@ -94,18 +94,18 @@ create table supervisor(
 create table project(
     projectId SERIAL PRIMARY KEY,
     projectName VARCHAR(30),
-    projectManagerId BIGINT REFERENCES projectManager(projectManagerid),
-    companyid BIGINT REFERENCES company(companyid)
+    projectManagerId BIGINT REFERENCES projectManager(projectManagerId),
+    companyId BIGINT REFERENCES company(companyid)
 )
 
 create table subProject(
     subProjectId SERIAL PRIMARY KEY,
     subProjectName VARCHAR(50),
     subProjectDetails TEXT,
-    superVisorId BIGINT REFERENCES superVisor(superVisorId),
+    supervisorId BIGINT REFERENCES supervisor(supervisorId),
     companyId BIGINT REFERENCES company(companyId),
     projectId BIGINT REFERENCES project(projectId),
-    projectManagerID BIGINT REFERENCES projectmanager(projectManagerid)
+    projectManagerId BIGINT REFERENCES projectmanager(projectManagerId)
 )
 
 create table task(

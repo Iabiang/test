@@ -11,8 +11,8 @@ const {
   PHONENO_MAX,
 } = require("./constraints");
 
-const validateIndividualSchema = async (data) => {
-  const individualSchema = yup.object().shape({
+const validateProjectManagerSchema = async (data) => {
+  const projectManagerSchema = yup.object().shape({
     firstName: yup.string().min(FIRSTNAME_MIN).max(FIRSTNAME_MAX).required(),
     middleName: yup.string().min(MIDDLENAME_MIN).max(MIDDLENAME_MAX),
     lastName: yup.string().min(LASTNAME_MIN).max(LASTNAME_MAX).required(),
@@ -26,7 +26,8 @@ const validateIndividualSchema = async (data) => {
     tokenId: yup.number().required().positive().integer(),
     companyId: yup.number().required().positive().integer(),
   });
-  return await individualSchema.validate(data, { abortEarly: false });
+
+  return await projectManagerSchema.validate(data, { abortEarly: false });
 };
 
-module.exports = { validateIndividualSchema };
+module.exports = { validateProjectManagerSchema };

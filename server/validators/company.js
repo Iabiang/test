@@ -1,18 +1,18 @@
 const yup = require("yup");
 
 const {
-  COMPANYNAME_MIN,
-  COMPANYNAME_MAX,
+  COMPANY_NAME_MIN,
+  COMPANY_NAME_MAX,
   PHONENO_MIN,
   PHONENO_MAX,
 } = require("./constraints");
 
 const validateCompanySchema = async (data) => {
-  const companySchema = yup.object().shape({
+  let companySchema = yup.object().shape({
     companyName: yup
       .string()
-      .min(COMPANYNAME_MIN)
-      .max(COMPANYNAME_MAX)
+      .min(COMPANY_NAME_MIN)
+      .max(COMPANY_NAME_MAX)
       .required(),
     companyPhoneNo: yup.string().min(PHONENO_MIN).max(PHONENO_MAX).required(),
     companyEmailId: yup.string().email(),
