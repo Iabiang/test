@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const projectController = require("../controllers/projectController");
-const { route } = require("./individualsRoutes");
 
 router
   .route("/")
