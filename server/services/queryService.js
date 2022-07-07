@@ -1,7 +1,21 @@
+const e = require("express");
 const db = require("../config/database");
 
-exports.findAll = async ({ tableName }) =>
-  db.query(`SELECT * FROM ${tableName}`);
+exports.findAll = async ({
+  tableName,
+  limit = 10,
+  offset = 0,
+  sortColumnName = "",
+  sortOperator = "asc",
+}) => {
+  if (sortColumnName === "") {
+    const sql = `SELECT * FROM ${tableName}  limit ${limit} offset ${offset}`;
+    return await db.query(sql);
+  } else {
+    const sql = `SELECT * FROM ${tableName} order by ${sortColumnName} ${sortOperator} limit ${limit} offset ${offset}`;
+    return await db.query(sql);
+  }
+};
 
 exports.countRows = async ({ tableName, columnName = "", key = null }) => {
   if (key !== null) {
@@ -13,9 +27,22 @@ exports.countRows = async ({ tableName, columnName = "", key = null }) => {
   }
 };
 
-exports.findById = async ({ tableName, columnName = "", id }) => {
-  const sql = `SELECT * FROM ${tableName} WHERE ${columnName} = $1`;
-  return await db.query(sql, [id]);
+exports.findById = async ({
+  tableName,
+  columnName = "",
+  id = null,
+  limit = 10,
+  offset = 0,
+  sortColumnName = "",
+  sortOperator = "asc",
+}) => {
+  if (!sortColumnName) {
+    const sql = `SELECT * FROM ${tableName} WHERE ${columnName} = $1 limit ${limit} offset ${offset}`;
+    return await db.query(sql, [id]);
+  } else {
+    const sql = `SELECT * FROM ${tableName} WHERE ${columnName} = $1 order by ${sortColumnName} ${sortOperator} limit ${limit} offset ${offset}`;
+    return await db.query(sql, [id]);
+  }
 };
 
 exports.create = async ({ tableName, keys, values }) => {
@@ -61,13 +88,30 @@ exports.delete = async ({
   return await db.query(sql, values);
 };
 
-exports.findByValue = async ({ tableName, columnName = "", value = "" }) => {
-  const sql = `SELECT * FROM ${tableName} where ${columnName} = $1`;
-  return await db.query(sql, [value]);
+exports.findByValue = async ({
+  tableName,
+  limit = 10,
+  offset = 0,
+  sortColumnName = "",
+  sortOperator = "asc",
+  columnName = "",
+  value = "",
+}) => {
+  if (!sortColumnName) {
+    const sql = `SELECT * FROM ${tableName} where ${columnName} = $1 limit ${limit} offset ${offset}`;
+    return await db.query(sql, [value]);
+  } else {
+    const sql = `SELECT * FROM ${tableName} where ${columnName} = $1 order by ${sortColumnName} ${sortOperator} limit ${limit} offset ${offset}`;
+    return await db.query(sql, [value]);
+  }
 };
 
 exports.findByValues = async ({
   tableName,
+  limit = 10,
+  offset = 0,
+  sortColumnName = "",
+  sortOperator = "asc",
   columnNames = [],
   values = [],
   operator = "and",
@@ -75,12 +119,21 @@ exports.findByValues = async ({
   const placeholder = columnNames
     .map((item, i) => `${item} = \$${i + 1}`) // placeholder = individualid = 1a and
     .join(` ${operator} `);
-  const sql = `SELECT * FROM ${tableName} WHERE ${placeholder}`;
-  return await db.query(sql, values);
+  if (!sortColumnName) {
+    const sql = `SELECT * FROM ${tableName} WHERE ${placeholder} limit ${limit} offset ${offset}`;
+    return await db.query(sql, values);
+  } else {
+    const sql = `SELECT * FROM ${tableName} WHERE ${placeholder} order by ${sortColumnName} ${sortOperator} limit ${limit} offset ${offset}`;
+    return await db.query(sql, values);
+  }
 };
 
 exports.findByStrings = async ({
   tableName = "",
+  limit = 10,
+  offset = 0,
+  sortColumnName = "",
+  sortOperator = "asc",
   columnNames = [],
   values = [],
   operator = "",
@@ -88,7 +141,12 @@ exports.findByStrings = async ({
   const placeholder = columnNames
     .map((item, i) => `lower(${item}) like lower($${i + 1})`)
     .join(` ${operator} `);
-  const sql = `SELECT * FROM ${tableName} where ${placeholder} `;
 
-  return await db.query(sql, values);
+  if (sortColumnName === "") {
+    const sql = `SELECT * FROM ${tableName} where ${placeholder} limit ${limit} offset ${offset}`;
+    return await db.query(sql, values);
+  } else {
+    const sql = `SELECT * FROM ${tableName} where ${placeholder} order by ${sortColumnName} ${sortOperator} limit ${limit} offset ${offset}`;
+    return await db.query(sql, values);
+  }
 };

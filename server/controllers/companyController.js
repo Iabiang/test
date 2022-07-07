@@ -3,8 +3,13 @@ const { validateCompanySchema } = require("../validators/company");
 const { Table } = require("../models/listOfTables");
 
 exports.listCompanies = (req, res) => {
+  const { size, page, sort_by, order_by } = req.query;
   CompanyService.findAll({
     tableName: Table.company,
+    limit: size,
+    sortColumnName: sort_by,
+    offset: page,
+    sortOperator: order_by,
   })
     .then((results) => res.status(200).send(results.rows))
     .catch((e) => console.log(e));
@@ -32,12 +37,15 @@ exports.addCompany = async (req, res) => {
 };
 
 exports.getCompanyStatus = (req, res) => {
-  const keys = Object.keys(req.query);
-  const values = Object.values(req.query);
+  const { size, page, sort_by, order_by, status } = req.query;
   CompanyService.findByStrings({
     tableName: Table.company,
-    columnNames: keys,
-    values: values,
+    limit: size,
+    offset: page,
+    sortColumnName: sort_by,
+    sortOperator: order_by,
+    columnNames: ["status"],
+    values: [status],
   })
     .then((results) => res.status(200).send(results.rows))
     .catch((err) =>
@@ -47,7 +55,7 @@ exports.getCompanyStatus = (req, res) => {
     );
 };
 
-exports.getCompanyList = (req, res) => {
+exports.countCompanyList = (req, res) => {
   CompanyService.countRows({
     tableName: Table.company,
   })
@@ -110,8 +118,12 @@ exports.deleteCompany = (req, res) => {
 
 exports.getCompanyIndividuals = (req, res) => {
   const { company_id } = req.params;
+  const { size, page, sort_by, order_by } = req.query;
   CompanyService.findByValue({
     tableName: Table.individual,
+    limit: size,
+    offset: page,
+    sortColumnName: sort_by,
     columnName: "companyid",
     value: company_id,
   })
@@ -202,10 +214,15 @@ exports.deleteCompanyIndividual = (req, res) => {
 
 exports.getCompanyProjectManagers = (req, res) => {
   const { company_id } = req.params;
+  const { size, page, sort_by, order_by } = req.query;
   CompanyService.findById({
     tableName: Table.projectManager,
     columnName: "companyid",
     id: company_id,
+    limit: size,
+    offset: page,
+    sortColumnName: sort_by,
+    sortOperator: order_by,
   })
     .then((results) => res.status(200).send(results.rows))
     .catch((err) =>
@@ -294,10 +311,15 @@ exports.deleteCompanyProjectManager = (req, res) => {
 
 exports.getCompanySupervisors = (req, res) => {
   const { company_id } = req.params;
+  const { size, page, sort_by, order_by } = req.query;
   CompanyService.findById({
     tableName: Table.supervisor,
     columnName: "companyid",
     id: company_id,
+    limit: size,
+    offset: page,
+    sortColumnName: sort_by,
+    sortOperator: order_by,
   })
     .then((results) => res.status(200).send(results.rows))
     .catch((err) =>

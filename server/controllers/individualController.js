@@ -4,7 +4,14 @@ const IndividualService = require("../services/queryService");
 
 /** return list of individuals */
 exports.listIndividuals = (req, res) => {
-  IndividualService.findAll({ tableName: Table.individual })
+  const { size, page, sort_by, orderby } = req.params;
+  IndividualService.findAll({
+    tableName: Table.individual,
+    limit: size,
+    offset: page,
+    sortColumnName: sort_by,
+    sortOperator: orderby,
+  })
     .then((results) => res.status(200).send(results.rows))
     .catch((err) => res.send(err.message));
 };
@@ -110,10 +117,15 @@ get task list of individuals
  */
 exports.listIndividualTask = (req, res) => {
   const { individual_id } = req.params;
+  const { size, page, sort_by, orderby } = req.params;
   IndividualService.findByValue({
     tableName: "task",
     columnName: "individualid",
     value: individual_id,
+    limit: size,
+    offset: page,
+    sortColumnName: sort_by,
+    sortOperator: orderby,
   })
     .then((results) => res.status(200).send(results.rows))
     .catch((err) =>
@@ -191,11 +203,16 @@ exports.deleteIndividualTask = (req, res) => {
 };
 
 exports.listIndividualTeams = (req, res) => {
+  const { size, page, sort_by, orderby } = req.params;
   const { individual_id } = req.params;
   IndividualService.findByValue({
     tableName: Table.team,
     columnName: "individualid",
     value: individual_id,
+    limit: size,
+    offset: page,
+    sortColumnName: sort_by,
+    sortOperator: orderby,
   })
     .then((results) => res.status(200).send(results.rows))
     .catch((err) =>
