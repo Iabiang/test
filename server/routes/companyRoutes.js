@@ -9,7 +9,7 @@ router
 
 router.route("/findbystatus").get(companyController.getCompanyStatus);
 
-router.route("/count").get(companyController.getCompanyList);
+router.route("/count").get(companyController.countCompanyList);
 
 router
   .route("/:company_id")

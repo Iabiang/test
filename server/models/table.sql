@@ -3,7 +3,7 @@ create table company(
     companyName VARCHAR(60),
     companyDescription TEXT,
     companyPhoneNo VARCHAR(20),
-    companyEmailId VARCHAR(50),
+    companyEmailId VARCHAR(100),
     status VARCHAR(50),
     createdBy VARCHAR(60),
     createdDate DATE
@@ -16,7 +16,7 @@ create table individual(
     lastName VARCHAR(20),
     gender VARCHAR(10),
     dob DATE,
-    emailId VARCHAR(50),
+    emailId VARCHAR(100),
     phoneNo VARCHAR(20),
     address TEXT,
     tokenId BIGINT REFERENCES token(tokenId) ,
@@ -70,7 +70,7 @@ create table projectManager(
     lastName VARCHAR(30),
     gender VARCHAR(10),
     dob DATE,
-    emailId VARCHAR(30),
+    emailId VARCHAR(100),
     phoneNo VARCHAR(20),
     address TEXT,
     tokenId BIGINT REFERENCES token(tokenId),
@@ -87,7 +87,7 @@ create table supervisor(
     companyId BIGINT REFERENCES company(companyId),
     tokenId BIGINT REFERENCES token(tokenId),
     phoneNo VARCHAR(20),
-    emailId VARCHAR(30),
+    emailId VARCHAR(100),
     address TEXT
 )
 
