@@ -17,24 +17,21 @@ exports.getSubProjectsList = (req, res) => {
 };
 
 exports.addSubproject = async (req, res) => {
-  try {
-    const results = await validateSubProjectSchema(req.body);
-    const keys = Object.keys(results);
-    const values = Object.values(results);
-    SubProjectService.create({
-      tableName: Table.subproject,
-      keys: keys,
-      values: values,
-    })
-      .then(() => res.status(201).send("Sub Project Created"))
-      .catch((err) =>
-        setImmediate(() => {
-          throw err;
-        })
-      );
-  } catch (error) {
-    return res.status(400).send(error.errors);
-  }
+  const { results, error } = await validateSubProjectSchema(req.body);
+  if (error) return res.status(400).send(error.errors);
+  const keys = Object.keys(results);
+  const values = Object.values(results);
+  SubProjectService.create({
+    tableName: Table.subproject,
+    keys: keys,
+    values: values,
+  })
+    .then(() => res.status(201).send("Sub Project Created"))
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
 };
 
 exports.countSubProjects = (req, res) => {

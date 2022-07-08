@@ -15,24 +15,21 @@ exports.getProjectList = (req, res) => {
 };
 
 exports.createProjectList = async (req, res) => {
-  try {
-    const results = await validateProjectSchema(req.body);
-    const keys = Object.keys(results);
-    const values = Object.values(results);
-    ProjectService.create({
-      tableName: Table.project,
-      keys: keys,
-      values: values,
-    })
-      .then((results) => res.status(201).send(`Project Created`))
-      .catch((err) =>
-        setImmediate(() => {
-          throw err;
-        })
-      );
-  } catch (error) {
-    return res.status(400).send(error.errors);
-  }
+  const { results, error } = await validateProjectSchema(req.body);
+  if (error) return res.status(400).send(error.errors);
+  const keys = Object.keys(results);
+  const values = Object.values(results);
+  ProjectService.create({
+    tableName: Table.project,
+    keys: keys,
+    values: values,
+  })
+    .then((results) => res.status(201).send(`Project Created`))
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
 };
 
 exports.countProjects = (req, res) => {

@@ -27,24 +27,21 @@ exports.individualsDetails = (req, res) => {
 
 /** create an individual*/
 exports.createIndividual = async (req, res) => {
-  try {
-    const results = await validateIndividualSchema(req.body);
-    const keys = Object.keys(results);
-    const values = Object.values(results);
-    IndividualService.create({
-      tableName: "individual",
-      keys: keys,
-      values: values,
-    })
-      .then((results) => res.status(201).send("Individual created"))
-      .catch((err) =>
-        setImmediate(() => {
-          throw err;
-        })
-      );
-  } catch (error) {
-    return res.status(400).send(error.errors);
-  }
+  const { results, error } = await validateIndividualSchema(req.body);
+  if (error) return res.status(400).send(error.errors);
+  const keys = Object.keys(results);
+  const values = Object.values(results);
+  IndividualService.create({
+    tableName: "individual",
+    keys: keys,
+    values: values,
+  })
+    .then((results) => res.status(201).send("Individual Created"))
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
 };
 
 /** update an individual details */

@@ -17,24 +17,21 @@ exports.listProjectManagers = (req, res) => {
 };
 
 exports.addProjectManager = async (req, res) => {
-  try {
-    const results = await validateProjectManagerSchema(req.body);
-    const keys = Object.keys(results);
-    const values = Object.values(results);
-    ProjectManagerService.create({
-      tableName: Table.projectManager,
-      keys: keys,
-      values: values,
-    })
-      .then(() => res.status(201).send("Project Manager Created"))
-      .catch((err) =>
-        setImmediate(() => {
-          throw err;
-        })
-      );
-  } catch (error) {
-    return res.status(400).send(error.errors);
-  }
+  const { results, error } = await validateProjectManagerSchema(req.body);
+  if (error) return res.status(400).send(error.errors);
+  const keys = Object.keys(results);
+  const values = Object.values(results);
+  ProjectManagerService.create({
+    tableName: Table.projectManager,
+    keys: keys,
+    values: values,
+  })
+    .then(() => res.status(201).send("Project Manager Created"))
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
 };
 
 exports.countProjectMangers = (req, res) => {

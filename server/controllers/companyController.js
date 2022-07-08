@@ -11,24 +11,21 @@ exports.listCompanies = (req, res) => {
 };
 
 exports.addCompany = async (req, res) => {
-  try {
-    const results = await validateCompanySchema(req.body);
-    const keys = Object.keys(results);
-    const values = Object.values(results);
-    CompanyService.create({
-      tableName: Table.company,
-      keys: keys,
-      values: values,
-    })
-      .then(() => res.status(201).send("Company Created"))
-      .catch((err) =>
-        setImmediate(() => {
-          throw err;
-        })
-      );
-  } catch (error) {
-    return res.status(400).send(error.errors);
-  }
+  const { results, error } = await validateCompanySchema(req.body);
+  if (error) return res.status(400).send(error.errors);
+  const keys = Object.keys(results);
+  const values = Object.values(results);
+  CompanyService.create({
+    tableName: Table.company,
+    keys: keys,
+    values: values,
+  })
+    .then(() => res.status(201).send("Company Created"))
+    .catch((err) =>
+      setImmediate(() => {
+        throw err;
+      })
+    );
 };
 
 exports.getCompanyStatus = (req, res) => {
