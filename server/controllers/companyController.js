@@ -1,6 +1,7 @@
+// @ts-nocheck
+const { Table } = require("../models/listOfTables");
 const CompanyService = require("../services/queryService");
 const { validateCompanySchema } = require("../validators/company");
-const { Table } = require("../models/listOfTables");
 
 exports.listCompanies = (req, res) => {
   const { size, page, sort_by, order_by } = req.query;

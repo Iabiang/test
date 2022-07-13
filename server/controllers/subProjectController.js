@@ -1,8 +1,7 @@
-const { serialize } = require("pg-protocol");
+// @ts-nocheck
 const { Table } = require("../models/listOfTables");
 const SubProjectService = require("../services/queryService");
 const { validateSubProjectSchema } = require("../validators/subProject");
-const { countListIndividuals } = require("./individualController");
 
 exports.getSubProjectsList = (req, res) => {
   SubProjectService.findAll({

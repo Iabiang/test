@@ -1,4 +1,4 @@
-const Data = [
+const data = [
   {
     firstname: "Jamison",
     middlename: "Burtie",
@@ -1203,7 +1203,7 @@ const Data = [
 
 const db = require("../server/config/database");
 let obj;
-for (obj of Data) {
+for (obj of data) {
   const keys = Object.keys(obj);
   const values = Object.values(obj);
   const sql = `insert into projectmanager (${keys}) values (${values.map(

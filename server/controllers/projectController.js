@@ -1,3 +1,4 @@
+// @ts-nocheck
 const { Table } = require("../models/listOfTables");
 const { validateProjectSchema } = require("../validators/project");
 const ProjectService = require("../services/queryService");

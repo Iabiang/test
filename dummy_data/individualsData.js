@@ -1,4 +1,4 @@
-const Data = [
+const data = [
   {
     firstname: "Melania",
     middlename: "Dorri",
@@ -1403,7 +1403,7 @@ const Data = [
 
 const db = require("../server/config/database");
 let obj;
-for (obj of Data) {
+for (obj of data) {
   const keys = Object.keys(obj);
   const values = Object.values(obj);
   const sql = `insert into individual (${keys}) values (${values.map(

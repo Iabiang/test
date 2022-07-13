@@ -1,4 +1,4 @@
-const Data = [
+const data = [
   {
     firstname: "Johanna",
     middlename: "Charlot",
@@ -1203,7 +1203,7 @@ const Data = [
 
 const db = require("../server/config/database");
 let obj;
-for (obj of Data) {
+for (obj of data) {
   const keys = Object.keys(obj);
   const values = Object.values(obj);
   const sql = `insert into supervisor (${keys}) values (${values.map(

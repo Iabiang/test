@@ -1,4 +1,4 @@
-const Data = [
+const data = [
   {
     tokenname: "Trencher",
     tokendescription: "Drainage of Left Axilla, Percutaneous Approach",
@@ -542,7 +542,7 @@ const Data = [
 
 const db = require("../server/config/database");
 let obj;
-for (obj of Data) {
+for (obj of data) {
   const keys = Object.keys(obj);
   const values = Object.values(obj);
   const sql = `insert into token (${keys}) values (${values.map(
